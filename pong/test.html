@@ -27,7 +27,11 @@ const requestDeviceMotionPermission = () => {
         // 許可を得られた場合、devicemotionをイベントリスナーに追加
         window.addEventListener('devicemotion', e => {
           // devicemotionのイベント処理
-		  debug.innerHTML = e.toString();
+		  var log = "";
+		  for (x in e) {
+			  log += x + ":" + e[x] + ";";
+		  }
+		  debug.innerHTML = log;
         });
       } else {
         // 許可を得られなかった場合の処理
