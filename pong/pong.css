@@ -31,10 +31,9 @@ canvas#table {
   position: absolute;
   display: block;
   z-index: 1;
-  padding: 20px 10px;
-  color: #00800000;
-  font-size: 50px;
-  background-color: #ffffff00;
+  width: 100px;
+  height: 100px;
+  left: 0px;
 }
 #up {
   top: 0px;
