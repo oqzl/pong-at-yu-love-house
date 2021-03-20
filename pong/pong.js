@@ -39,15 +39,15 @@ var rounds = [5, 5, 3, 3, 2];
 var colors = ["#1abc9c", "#2ecc71", "#3498db", "#e74c3c", "#9b59b6"];
 
 var PADDLE_PARAMS = {
-  width: 18,
-  height: 100,
-  speed: 12,
+  width: 20,
+  height: 150,
+  speed: 16,
 };
 
 var BALL_PARAMS = {
-  width: 18,
-  height: 18,
-  speed: 12,
+  width: 30,
+  height: 30,
+  speed: 10,
 };
 
 // The ball object (The cube that bounces back and forth)
@@ -381,13 +381,20 @@ var Game = {
     if (!Pong.over) requestAnimationFrame(Pong.loop);
   },
 
+  gameStart: function () {
+    beep0.play();
+    Pong.running = true;
+    window.requestAnimationFrame(Pong.loop);
+  },
+
   listen: function () {
     document.addEventListener("keydown", function (key) {
       // Handle the 'Press any key to begin' function and start the game.
       if (Pong.running === false) {
-        beep0.play();
-        Pong.running = true;
-        window.requestAnimationFrame(Pong.loop);
+        // beep0.play();
+        // Pong.running = true;
+        // window.requestAnimationFrame(Pong.loop);
+        Pong.gameStart();
       }
 
       // Handle up arrow and w key events
@@ -407,15 +414,16 @@ var Game = {
     // タッチ終了
     document.getElementById("table").addEventListener("touchend", function () {
       if (Pong.running === false) {
-        beep0.play();
-        Pong.running = true;
-        window.requestAnimationFrame(Pong.loop);
+        // beep0.play();
+        // Pong.running = true;
+        // window.requestAnimationFrame(Pong.loop);
+        Pong.gameStart();
       }
     });
 
     // タッチ開始
     document.getElementById("up").addEventListener("touchstart", function (e) {
-      if (e.touches) Pong.player.move = DIRECTION.UP;
+      Pong.player.move = DIRECTION.UP;
     });
     document.getElementById("up").addEventListener("touchend", function () {
       Pong.player.move = DIRECTION.IDLE;
