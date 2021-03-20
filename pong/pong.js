@@ -67,7 +67,7 @@ var Ball = {
 
 // The paddle object (The two lines that move up and down)
 var Paddle = {
-  new: function (side) {
+  new: function (side, name) {
     return {
       width: PADDLE_PARAMS.width,
       height: PADDLE_PARAMS.height,
@@ -76,12 +76,15 @@ var Paddle = {
       score: 0,
       move: DIRECTION.IDLE,
       speed: PADDLE_PARAMS.speed,
+      name: name,
     };
   },
 };
 
 var Game = {
-  initialize: function () {
+  initialize: function (player, opponent) {
+    console.log(player, opponent);
+
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
 
@@ -89,8 +92,8 @@ var Game = {
     this.canvas.width = this.canvas.clientWidth * ratio;
     this.canvas.height = this.canvas.clientHeight * ratio;
 
-    this.player = Paddle.new.call(this, "left");
-    this.paddle = Paddle.new.call(this, "right");
+    this.player = Paddle.new.call(this, "left", player);
+    this.paddle = Paddle.new.call(this, "right", opponent);
     this.ball = Ball.new.call(this);
 
     this.paddle.speed = PADDLE_PARAMS.speed * 0.8; // 敵パドル速度
@@ -444,6 +447,7 @@ var Game = {
     this.timer = new Date().getTime();
 
     victor.score++;
+
     if (!beep2.paused) {
       beep2.pause();
       beep2.currentTime = 0;
@@ -464,8 +468,18 @@ var Game = {
   },
 };
 
+const queryString = window.location.search || "";
+var queryParams = [...new URLSearchParams(queryString).entries()].reduce(
+  (obj, e) => ({ ...obj, [e[0]]: e[1] }),
+  {}
+);
+console.log(queryParams);
+
 var Pong = Object.assign({}, Game);
-Pong.initialize();
+Pong.initialize(
+  queryParams.player || "no-name",
+  queryParams.opponent || "yu-love"
+);
 
 window.addEventListener("resize", function () {
   location.reload();
