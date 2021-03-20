@@ -85,6 +85,8 @@ var Game = {
     // this.canvas.height = 1000;
     // this.canvas.width = w.offsetWidth / ratio / 2;
     // this.canvas.height = w.offsetHeight / ratio / 2;
+    this.canvas.width = this.canvas.clientWidth / ratio;
+    this.canvas.height = this.canvas.clientHeight / ratio;
 
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
