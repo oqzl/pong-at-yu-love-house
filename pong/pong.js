@@ -27,7 +27,9 @@ const beep3 = new Audio("./mp3/levelup.mp3");
 const beep4 = new Audio("./mp3/cheers.mp3");
 
 // Image
-const img_table = new Image("./img/table.png");
+const img_racket01 = new Image("./img/racket01.png");
+const img_racket02 = new Image("./img/racket02.png");
+const img_ball = new Image("./img/ball.png");
 
 // Global Variables
 var DIRECTION = {
@@ -90,7 +92,6 @@ var Game = {
 
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
-    this.context.globalAlpha = 0.5;
 
     let ratio = window.devicePixelRatio;
     this.canvas.width = this.canvas.clientWidth * ratio;
@@ -284,47 +285,51 @@ var Game = {
     // // Clear the Canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // // 背景にテーブル画像を貼る
-    // this.context.drawImage(
-    //   img_table,
-    //   0,
-    //   0,
-    //   this.canvas.clientWidth,
-    //   this.canvas.clientHeight
-    // );
-
-    // Set the fill style to black
-    this.context.fillStyle = this.color;
-
     // Draw the background
+    this.context.fillStyle = this.color;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Set the fill style to white (For the paddles and the ball)
-    this.context.fillStyle = "#ffffff";
-
-    // Draw the Player
-    this.context.fillRect(
-      this.player.x,
-      this.player.y,
-      this.player.width,
-      this.player.height
-    );
-
-    // Draw the Paddle
-    this.context.fillRect(
-      this.paddle.x,
-      this.paddle.y,
-      this.paddle.width,
-      this.paddle.height
-    );
-
-    // Draw the net (Line in the middle)
+    // 卓球台のセンターライン
     this.context.beginPath();
     this.context.moveTo(0, this.canvas.height / 2);
     this.context.lineTo(this.canvas.width, this.canvas.height / 2);
     this.context.lineWidth = 20;
     this.context.strokeStyle = "#ffffff";
     this.context.stroke();
+
+    // Draw the Player
+    this.context.fillStyle = "#FFD187";
+    this.context.fillRect(
+      this.player.x,
+      this.player.y,
+      this.player.width,
+      this.player.height * 1.4
+    );
+    this.context.fillStyle = "#FF0000";
+    this.context.fillRect(
+      this.player.x + 2,
+      this.player.y,
+      this.player.width - 2,
+      this.player.height
+    );
+
+    // Draw the Paddle
+    this.context.fillStyle = "#FFD187";
+    this.context.fillRect(
+      this.paddle.x,
+      this.paddle.y,
+      this.paddle.width,
+      this.paddle.height * 1.4
+    );
+    this.context.fillStyle = "#000000";
+    this.context.fillRect(
+      this.paddle.x,
+      this.paddle.y,
+      this.paddle.width - 2,
+      this.paddle.height
+    );
+
+    // ネットの影
     this.context.fillStyle = "#00000077";
     this.context.fillRect(
       this.canvas.width / 2,
@@ -332,6 +337,8 @@ var Game = {
       this.canvas.width / 15,
       this.canvas.height
     );
+    this.context.fillStyle = "#ffffff";
+    // ネット
     this.context.beginPath();
     this.context.moveTo(this.canvas.width / 2, this.canvas.height);
     this.context.lineTo(this.canvas.width / 2, 0);
@@ -341,12 +348,17 @@ var Game = {
 
     // Draw the Ball
     if (Pong._turnDelayIsOver.call(this)) {
-      this.context.fillStyle = "#ffffff";
       this.context.fillRect(
-        this.ball.x,
-        this.ball.y,
-        this.ball.width,
-        this.ball.height
+        this.ball.x - 2,
+        this.ball.y + 2,
+        this.ball.width + 4,
+        this.ball.height - 4
+      );
+      this.context.fillRect(
+        this.ball.x + 2,
+        this.ball.y - 2,
+        this.ball.width - 4,
+        this.ball.height + 4
       );
     }
 
