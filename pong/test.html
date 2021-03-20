@@ -26,6 +26,7 @@ const requestDeviceMotionPermission = () => {
         // 許可を得られた場合、devicemotionをイベントリスナーに追加
         window.addEventListener('devicemotion', e => {
           // devicemotionのイベント処理
+		  debug.innerHTML = e.toString();
         });
       } else {
         // 許可を得られなかった場合の処理
