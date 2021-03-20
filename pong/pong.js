@@ -38,8 +38,8 @@ var DIRECTION = {
   RIGHT: 4,
 };
 
-var rounds = [5];
-var colors = ["#008000"];
+const MATCH = 5;
+const TABLE_COLOR = "#008000";
 
 var PADDLE_PARAMS = {
   width: 20,
@@ -103,8 +103,8 @@ var Game = {
     this.paddle.speed = PADDLE_PARAMS.speed * 0.8; // 敵パドル速度
     this.running = this.over = false;
     this.turn = this.paddle;
-    this.timer = this.round = 0;
-    this.color = "#2c3e50";
+    this.timer = 0;
+    this.color = TABLE_COLOR;
 
     Pong.menu();
     Pong.listen();
@@ -262,29 +262,16 @@ var Game = {
 
     // Handle the end of round transition
     // Check to see if the player won the round.
-    if (this.player.score === rounds[this.round]) {
-      // Check to see if there are any more rounds/levels left and display the victory screen if
-      // there are not.
-      if (!rounds[this.round + 1]) {
-        this.over = true;
-        beep4.play();
-        setTimeout(function () {
-          Pong.endGameMenu("Winner!");
-        }, 1000);
-      } else {
-        // If there is another round, reset all the values and increment the round number.
-        this.color = this._generateRoundColor();
-        this.player.score = this.paddle.score = 0;
-        this.player.speed += 0.5;
-        this.paddle.speed += 1;
-        this.ball.speed += 1;
-        this.round += 1;
-
-        beep3.play();
-      }
+    if (this.player.score === MATCH) {
+      // Check to see if there are any more rounds/levels left and display the victory screen if there are not.
+      this.over = true;
+      beep4.play();
+      setTimeout(function () {
+        Pong.endGameMenu("Winner!");
+      }, 1000);
     }
     // Check to see if the paddle/AI has won the round.
-    else if (this.paddle.score === rounds[this.round]) {
+    else if (this.paddle.score === MATCH) {
       this.over = true;
       setTimeout(function () {
         Pong.endGameMenu("Game Over!");
@@ -331,8 +318,30 @@ var Game = {
       this.paddle.height
     );
 
+    // Draw the net (Line in the middle)
+    this.context.beginPath();
+    this.context.moveTo(0, this.canvas.height / 2);
+    this.context.lineTo(this.canvas.width, this.canvas.height / 2);
+    this.context.lineWidth = 20;
+    this.context.strokeStyle = "#ffffff";
+    this.context.stroke();
+    this.context.fillStyle = "#00000077";
+    this.context.fillRect(
+      this.canvas.width / 2,
+      0,
+      this.canvas.width / 15,
+      this.canvas.height
+    );
+    this.context.beginPath();
+    this.context.moveTo(this.canvas.width / 2, this.canvas.height);
+    this.context.lineTo(this.canvas.width / 2, 0);
+    this.context.lineWidth = 10;
+    this.context.strokeStyle = "#ffffff";
+    this.context.stroke();
+
     // Draw the Ball
     if (Pong._turnDelayIsOver.call(this)) {
+      this.context.fillStyle = "#ffffff";
       this.context.fillRect(
         this.ball.x,
         this.ball.y,
@@ -340,15 +349,6 @@ var Game = {
         this.ball.height
       );
     }
-
-    // Draw the net (Line in the middle)
-    this.context.beginPath();
-    // this.context.setLineDash([7, 15]);
-    this.context.moveTo(this.canvas.width / 2, this.canvas.height - 140);
-    this.context.lineTo(this.canvas.width / 2, 140);
-    this.context.lineWidth = 10;
-    this.context.strokeStyle = "#ffffff";
-    this.context.stroke();
 
     // Set the default canvas font and align it to the center
     this.context.font = "100px Courier New";
@@ -366,26 +366,6 @@ var Game = {
       this.paddle.score.toString(),
       this.canvas.width / 2 + 300,
       200
-    );
-
-    // Change the font size for the center score text
-    this.context.font = "30px Courier New";
-
-    // Draw the winning score (center)
-    this.context.fillText(
-      "Round " + (Pong.round + 1),
-      this.canvas.width / 2,
-      35
-    );
-
-    // Change the font size for the center score value
-    this.context.font = "40px Courier";
-
-    // Draw the current round number
-    this.context.fillText(
-      rounds[Pong.round] ? rounds[Pong.round] : rounds[Pong.round - 1],
-      this.canvas.width / 2,
-      100
     );
   },
 
