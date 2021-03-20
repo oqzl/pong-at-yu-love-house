@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>湯ラブTest</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width,user-scalable=no">
+<link rel="apple-touch-icon" href="./img/sns_logo.png" />
+<link rel="shortcut icon" href="./img/sns_logo.png" />
+</head>
+<body>
+<div id="debug"></div>
+<script>
+const debug = document.getElementById("debug");
+debug.innerHTML = "HOGE";
+
+const requestDeviceMotionPermission = () => {
+  if (
+    DeviceMotionEvent &&
+    typeof DeviceMotionEvent.requestPermission === 'function'
+  ) {
+    DeviceMotionEvent.requestPermission()
+    	.then(permissionState => {
+      if (permissionState === 'granted') {
+        // 許可を得られた場合、devicemotionをイベントリスナーに追加
+        window.addEventListener('devicemotion', e => {
+          // devicemotionのイベント処理
+        }
+      } else {
+        // 許可を得られなかった場合の処理
+      }
+    }).catch(console.error) // https通信でない場合などで許可を取得できなかった場合
+  } else {
+    // 上記以外のブラウザ
+  }
+}
+
+// ボタンクリックでrequestDeviceMotionPermission実行
+debug.addEventListener('touchstart', requestDeviceMotionPermission, false);
+</script>
+</body>
+</html>
