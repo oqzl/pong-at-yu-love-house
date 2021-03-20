@@ -92,8 +92,8 @@ var Game = {
     this.canvas.width = this.canvas.clientWidth * ratio;
     this.canvas.height = this.canvas.clientHeight * ratio;
 
-    this.player = Paddle.new.call(this, "left", player);
-    this.paddle = Paddle.new.call(this, "right", opponent);
+    this.player = Paddle.new.call(this, "left", player || "no-name");
+    this.paddle = Paddle.new.call(this, "right", opponent || "yu-love");
     this.ball = Ball.new.call(this);
 
     this.paddle.speed = PADDLE_PARAMS.speed * 0.8; // 敵パドル速度
@@ -102,8 +102,12 @@ var Game = {
     this.timer = 0;
     this.color = TABLE_COLOR;
 
-    Pong.menu();
-    Pong.listen();
+    // タップしたらスタート版
+    // Pong.menu();
+    // Pong.listen();
+
+    // 3秒カウントダウン版
+    Pong.countDown(3);
   },
 
   endGameMenu: function (text) {
@@ -131,10 +135,11 @@ var Game = {
 
     setTimeout(function () {
       Pong = Object.assign({}, Game);
-      Pong.initialize();
+      Pong.initialize(); // !!! ここでロビーに戻す !!!
     }, 3000);
   },
 
+  // キーを押すかタップすると開始するバージョン
   menu: function () {
     // Draw all the Pong objects in their current state
     Pong.draw();
@@ -162,6 +167,44 @@ var Game = {
     );
   },
 
+  // カウントダウンで勝手に始まるバージョン
+  countDown: function (count) {
+    // Draw all the Pong objects in their current state
+    Pong.draw();
+
+    // Change the canvas font size and color
+    this.context.font = "50px Courier New";
+    this.context.fillStyle = this.color;
+
+    // Draw the rectangle behind the 'Press any key to begin' text.
+    this.context.fillRect(
+      this.canvas.width / 2 - 48,
+      this.canvas.height / 2 - 48,
+      100,
+      100
+    );
+
+    // Change the canvas color;
+    this.context.fillStyle = "#ffffff";
+
+    // カウントダウンを描画
+    this.context.fillText(
+      count,
+      this.canvas.width / 2,
+      this.canvas.height / 2 + 15
+    );
+
+    // 1秒待つ
+    window.setTimeout(function () {
+      if (count == 1) {
+        Pong.listen();
+        Pong.gameStart();
+      } else {
+        Pong.countDown(count - 1);
+      }
+    }, 1000);
+  },
+
   // Update all objects (move the player, paddle, ball, increment the score, etc.)
   update: function () {
     if (!this.over) {
@@ -170,9 +213,14 @@ var Game = {
         Pong._resetTurn.call(this, this.paddle, this.player);
       if (this.ball.x >= this.canvas.width - this.ball.width)
         Pong._resetTurn.call(this, this.player, this.paddle);
-      if (this.ball.y <= 0) this.ball.moveY = DIRECTION.DOWN;
-      if (this.ball.y >= this.canvas.height - this.ball.height)
+      if (this.ball.y <= 0) {
+        this.ball.moveY = DIRECTION.DOWN;
+        beep0.play();
+      }
+      if (this.ball.y >= this.canvas.height - this.ball.height) {
         this.ball.moveY = DIRECTION.UP;
+        beep0.play();
+      }
 
       // Move player if they player.move value was updated by a keyboard event
       if (this.player.move === DIRECTION.UP) this.player.y -= this.player.speed;
@@ -478,10 +526,7 @@ var queryParams = [...new URLSearchParams(queryString).entries()].reduce(
 console.log(queryParams);
 
 var Pong = Object.assign({}, Game);
-Pong.initialize(
-  queryParams.player || "no-name",
-  queryParams.opponent || "yu-love"
-);
+Pong.initialize(queryParams.player, queryParams.opponent);
 
 window.addEventListener("resize", function () {
   location.reload();
