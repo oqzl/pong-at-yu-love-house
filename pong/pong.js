@@ -92,6 +92,15 @@ var Game = {
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
 
+    window.addEventListener(
+      "resize",
+      function (e) {
+        this.canvas.width = this.canvas.clientWidth * ratio;
+        this.canvas.height = this.canvas.clientHeight * ratio;
+      },
+      { passive: false }
+    );
+
     this.player = Paddle.new.call(this, "left");
     this.paddle = Paddle.new.call(this, "right");
     this.ball = Ball.new.call(this);
