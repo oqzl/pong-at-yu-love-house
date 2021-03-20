@@ -226,9 +226,9 @@ var Game = {
     // Draw the rectangle behind the 'Press any key to begin' text.
     this.context.fillRect(
       this.canvas.width / 2 - 350,
-      this.canvas.height / 2 - 48,
+      this.canvas.height / 2 - 150,
       700,
-      100
+      250
     );
 
     // Change the canvas color;
@@ -236,9 +236,14 @@ var Game = {
 
     // Draw the 'press any key to begin' text
     this.context.fillText(
-      "Press any key to begin",
+      "湯★Loveピンポン",
       this.canvas.width / 2,
-      this.canvas.height / 2 + 15
+      this.canvas.height / 2 - 50
+    );
+    this.context.fillText(
+      "TAP TO START",
+      this.canvas.width / 2,
+      this.canvas.height / 2 + 50
     );
 
     Pong.listen();
