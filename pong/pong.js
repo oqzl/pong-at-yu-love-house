@@ -27,6 +27,8 @@ window.removeEventListener(
   { passive: false }
 );
 
+var AudioX = {};
+
 // Audio (Game sounds)
 const beep0 = new Audio("./mp3/ping.mp3");
 const beep1 = new Audio("./mp3/hit.mp3");
