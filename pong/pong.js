@@ -83,11 +83,11 @@ var Game = {
     let ratio = window.devicePixelRatio;
     // this.canvas.width = 1400;
     // this.canvas.height = 1000;
-    this.canvas.width = w.offsetWidth / ratio;
-    this.canvas.height = w.offsetHeight / ratio;
+    this.canvas.width = w.offsetWidth / ratio / 2;
+    this.canvas.height = w.offsetHeight / ratio / 2;
 
-    this.canvas.style.width = this.canvas.width / 2 + "px";
-    this.canvas.style.height = this.canvas.height / 2 + "px";
+    // this.canvas.style.width = this.canvas.width / 2 + "px";
+    // this.canvas.style.height = this.canvas.height / 2 + "px";
 
     this.player = Paddle.new.call(this, "left");
     this.paddle = Paddle.new.call(this, "right");
