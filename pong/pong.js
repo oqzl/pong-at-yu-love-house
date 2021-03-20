@@ -325,7 +325,7 @@ var Game = {
     );
 
     // ネットの影
-    this.context.fillStyle = "#00000077";
+    this.context.fillStyle = "#00000044";
     this.context.fillRect(
       this.canvas.width / 2,
       0,
