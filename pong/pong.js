@@ -87,8 +87,8 @@ var Game = {
     // this.canvas.width = this.canvas.clientWidth;
     // this.canvas.height = this.canvas.clientHeight;
 
-    this.canvas.style.width = this.canvas.width / 2 + "px";
-    this.canvas.style.height = this.canvas.height / 2 + "px";
+    // this.canvas.style.width = this.canvas.width / 2 + "px";
+    // this.canvas.style.height = this.canvas.height / 2 + "px";
 
     this.player = Paddle.new.call(this, "left");
     this.paddle = Paddle.new.call(this, "right");
