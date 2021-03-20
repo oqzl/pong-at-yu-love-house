@@ -147,12 +147,12 @@ var Game = {
     // MOTION.x = a.x;
     // MOTION.y = a.y;
     MOTION.z = a.z;
-    if (MOTION.z > MOTION_Z_FROM + 3) {
-      MOTION_UP = true;
-      MOTION_DOWN = false;
-    } else if (MOTION.z < MOTION_Z_FROM - 3) {
+    if (MOTION.z > MOTION_Z_FROM + 2) {
       MOTION_UP = false;
       MOTION_DOWN = true;
+    } else if (MOTION.z < MOTION_Z_FROM - 2) {
+      MOTION_UP = true;
+      MOTION_DOWN = false;
     } else {
       MOTION_UP = false;
       MOTION_DOWN = false;
