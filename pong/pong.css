@@ -17,7 +17,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 body {
   text-align: center;
-  background-image: url(./img/table.png);
 }
 
 canvas#table {
@@ -40,9 +39,4 @@ canvas#table {
 }
 #down {
   bottom: 0;
-}
-
-#icon1 {
-}
-#icon2 {
 }
