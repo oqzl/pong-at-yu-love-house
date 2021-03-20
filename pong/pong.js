@@ -297,9 +297,9 @@ var Game = {
       }
 
       // Move player if they player.move value was updated by a keyboard event
-      if (TAP_UP || MOTION_UP) {
+      if ((TAP_UP || MOTION_UP) && !TAP_DOWN) {
         this.player.y -= this.player.speed;
-      } else if (TAP_DOWN || MOTION_DOWN) {
+      } else if ((TAP_DOWN || MOTION_DOWN) && !TAP_UP) {
         this.player.y += this.player.speed;
       }
       // if (this.player.move === DIRECTION.UP) this.player.y -= this.player.speed;
