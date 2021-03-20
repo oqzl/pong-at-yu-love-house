@@ -20,8 +20,9 @@ window.removeEventListener(
 );
 
 // Audio (Game sounds) in base64 format.
+var beep0 = new Audio("./ping.mp3");
 var beep1 = new Audio("./hit.mp3");
-var beep2 = new Audio("./pingpong.mp3");
+var beep2 = new Audio("./pong.mp3");
 var beep3 = new Audio("./levelup.mp3");
 var beep4 = new Audio("./cheers.mp3");
 
@@ -384,6 +385,7 @@ var Game = {
     document.addEventListener("keydown", function (key) {
       // Handle the 'Press any key to begin' function and start the game.
       if (Pong.running === false) {
+        beep0.play();
         Pong.running = true;
         window.requestAnimationFrame(Pong.loop);
       }
@@ -405,6 +407,7 @@ var Game = {
     // タッチ終了
     document.getElementById("table").addEventListener("touchend", function () {
       if (Pong.running === false) {
+        beep0.play();
         Pong.running = true;
         window.requestAnimationFrame(Pong.loop);
       }
