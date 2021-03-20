@@ -277,7 +277,7 @@ var Game = {
 
   // Draw the objects to the canvas element
   draw: function () {
-    // // Clear the Canvas
+    // Clear the Canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Draw the background
@@ -358,21 +358,23 @@ var Game = {
     }
 
     // Set the default canvas font and align it to the center
-    this.context.font = "100px Courier New";
+    this.context.font = "50px Courier New";
     this.context.textAlign = "center";
 
     // Draw the players score (left)
+    this.context.fillText(this.player.name, this.canvas.width / 2 - 300, 100);
     this.context.fillText(
       this.player.score.toString(),
       this.canvas.width / 2 - 300,
-      200
+      150
     );
 
     // Draw the paddles score (right)
+    this.context.fillText(this.paddle.name, this.canvas.width / 2 + 300, 100);
     this.context.fillText(
       this.paddle.score.toString(),
       this.canvas.width / 2 + 300,
-      200
+      150
     );
   },
 
