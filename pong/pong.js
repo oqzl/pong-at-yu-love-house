@@ -436,8 +436,10 @@ var Game = {
     this.timer = new Date().getTime();
 
     victor.score++;
-    beep2.pause();
-    beep2.currentTime = 0;
+    if (!beep2.paused) {
+      beep2.pause();
+      beep2.currentTime = 0;
+    }
     beep2.play();
   },
 

@@ -31,7 +31,7 @@ canvas#table {
   position: absolute;
   display: block;
   z-index: 1;
-  padding: 10px;
+  padding: 20px 10px;
   background-color: #fff;
 }
 #up {
