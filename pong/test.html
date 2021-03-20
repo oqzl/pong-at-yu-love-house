@@ -11,6 +11,7 @@
 </head>
 <body>
 <div id="debug"></div>
+<button id="button">PUSH</button>
 <script>
 const debug = document.getElementById("debug");
 debug.innerHTML = "HOGE";
@@ -38,7 +39,8 @@ const requestDeviceMotionPermission = () => {
 }
 
 // ボタンクリックでrequestDeviceMotionPermission実行
-debug.addEventListener('touchstart', requestDeviceMotionPermission, false);
+const button = document.getElementById("button");
+button.addEventListener("click", requestDeviceMotionPermission, false);
 </script>
 </body>
 </html>
