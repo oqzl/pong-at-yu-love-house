@@ -32,9 +32,9 @@ canvas#table {
   display: block;
   z-index: 1;
   padding: 20px 10px;
-  color: #008000;
+  color: #00800000;
   font-size: 50px;
-  /* background-color: #fff; */
+  background-color: #ffffff00;
 }
 #up {
   top: 0px;
