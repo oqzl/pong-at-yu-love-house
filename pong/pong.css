@@ -34,11 +34,14 @@ canvas#table {
   padding: 10px;
   background-color: #fff;
 }
-
 #up {
   top: 0px;
 }
-
 #down {
   bottom: 0;
+}
+
+#icon1 {
+}
+#icon2 {
 }
