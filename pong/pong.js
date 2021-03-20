@@ -81,10 +81,10 @@ var Game = {
     this.context = this.canvas.getContext("2d");
 
     // let ratio = window.devicePixelRatio;
-    this.canvas.width = 1400;
-    this.canvas.height = 1000;
-    // this.canvas.width = w.offsetWidth;
-    // this.canvas.height = w.offsetHeight;
+    // this.canvas.width = 1400;
+    // this.canvas.height = 1000;
+    this.canvas.width = w.offsetWidth;
+    this.canvas.height = w.offsetHeight;
 
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
