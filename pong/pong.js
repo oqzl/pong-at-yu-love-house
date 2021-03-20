@@ -6,14 +6,14 @@
 // 横画面固定（ダメかも）
 Screen.lockOrientation("landscape");
 
-// // スクロール禁止（関係ないかも？）
-// window.addEventListener(
-//   "touchmove",
-//   function (e) {
-//     e.preventDefault();
-//   },
-//   { passive: false }
-// );
+// スクロール禁止（関係ないかも？）
+window.addEventListener(
+  "touchmove",
+  function (e) {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 // window.removeEventListener(
 //   "touchmove",
 //   function (e) {
