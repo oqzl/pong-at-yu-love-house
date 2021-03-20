@@ -81,6 +81,15 @@ var Game = {
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
 
+    // スクロール禁止
+    this.canvas.addEventListener(
+      "touchmove",
+      function (evt) {
+        evt.preventDefault();
+      },
+      false
+    );
+
     this.player = Paddle.new.call(this, "left");
     this.paddle = Paddle.new.call(this, "right");
     this.ball = Ball.new.call(this);
