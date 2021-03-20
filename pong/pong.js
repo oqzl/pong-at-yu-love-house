@@ -422,7 +422,7 @@ var Game = {
     });
 
     // タッチ開始
-    document.getElementById("up").addEventListener("touchstart", function (e) {
+    document.getElementById("up").addEventListener("touchstart", function () {
       Pong.player.move = DIRECTION.UP;
     });
     document.getElementById("up").addEventListener("touchend", function () {
