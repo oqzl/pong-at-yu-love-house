@@ -402,6 +402,15 @@ var Game = {
       Pong.player.move = DIRECTION.IDLE;
     });
 
+    // タッチでゲームスタート
+    this.canvas.addEventListener("touchend", function () {
+      if (Pong.running === false) {
+        Pong.running = true;
+        window.requestAnimationFrame(Pong.loop);
+      }
+    });
+
+    // タッチで上移動
     document.querySelector("#up").addEventListener("touchstart", function () {
       Pong.player.move = DIRECTION.UP;
     });
@@ -409,6 +418,7 @@ var Game = {
       Pong.player.move = DIRECTION.IDLE;
     });
 
+    // タッチで下移動
     document.querySelector("#down").addEventListener("touchstart", function () {
       Pong.player.move = DIRECTION.UP;
     });
