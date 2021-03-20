@@ -3,8 +3,13 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-// countDown or touch
-const CONFIG_START = "countDown"; // "touch";
+// const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
+
+// 開始時に自動でカウントダウンするか
+const CONFIG_START_COUNTDOWN = true;
+
+// ジャイロ操作するか
+const CONFIG_USE_MOTION = true;
 
 // スクロール禁止（関係ないかも？）
 window.addEventListener(
@@ -30,7 +35,7 @@ const beep3 = new Audio("./mp3/levelup.mp3");
 const beep4 = new Audio("./mp3/cheers.mp3");
 
 // Global Variables
-var DIRECTION = {
+const DIRECTION = {
   IDLE: 0,
   UP: 1,
   DOWN: 2,
@@ -38,6 +43,7 @@ var DIRECTION = {
   RIGHT: 4,
 };
 
+// 定数
 const MATCH = 5;
 const TABLE_COLOR = "#008000";
 
@@ -52,6 +58,21 @@ var BALL_PARAMS = {
   height: 30,
   speed: 10,
 };
+
+// ジャイロセンサーから取得した重力加速度の値
+var MOTION = {
+  x: 0,
+  y: 0,
+  z: 0,
+};
+// ゲーム開始直前の傾き（基準値）
+var MOTION_Z_FROM = 0;
+
+// Control
+var TAP_UP = false;
+var TAP_DOWN = false;
+var MOTION_UP = false;
+var MOTION_DOWN = false;
 
 // The ball object (The cube that bounces back and forth)
 var Ball = {
@@ -105,12 +126,59 @@ var Game = {
     this.timer = 0;
     this.color = TABLE_COLOR;
 
-    if (CONFIG_START == "countDown") {
+    if (CONFIG_USE_MOTION) {
+      // ジャイロのパーミッション
+      Pong.requestDeviceMotionPermission();
+    }
+
+    if (CONFIG_START_COUNTDOWN) {
       // 3秒カウントダウン版
       Pong.countDown(3);
     } else {
       // タップしたらスタート版
       Pong.menu();
+    }
+  },
+
+  deviceMotionEventHandler: (e) => {
+    // devicemotionのイベント処理
+    var log = "";
+    const a = e.accelerationIncludingGravity;
+    // MOTION.x = a.x;
+    // MOTION.y = a.y;
+    MOTION.z = a.z;
+    if (MOTION.z > MOTION_Z_FROM + 3) {
+      MOTION_UP = true;
+      MOTION_DOWN = false;
+    } else if (MOTION.z < MOTION_Z_FROM - 3) {
+      MOTION_UP = false;
+      MOTION_DOWN = true;
+    } else {
+      MOTION_UP = false;
+      MOTION_DOWN = false;
+    }
+  },
+
+  requestDeviceMotionPermission: () => {
+    if (
+      DeviceMotionEvent &&
+      typeof DeviceMotionEvent.requestPermission === "function"
+    ) {
+      DeviceMotionEvent.requestPermission()
+        .then((permissionState) => {
+          if (permissionState === "granted") {
+            // 許可を得られた場合、devicemotionをイベントリスナーに追加
+            window.addEventListener(
+              "devicemotion",
+              Pong.deviceMotionEventHandler
+            );
+          } else {
+            // 許可を得られなかった場合の処理
+          }
+        })
+        .catch(console.error); // https通信でない場合などで許可を取得できなかった場合
+    } else {
+      // 上記以外のブラウザ
     }
   },
 
@@ -229,9 +297,14 @@ var Game = {
       }
 
       // Move player if they player.move value was updated by a keyboard event
-      if (this.player.move === DIRECTION.UP) this.player.y -= this.player.speed;
-      else if (this.player.move === DIRECTION.DOWN)
+      if (TAP_UP || MOTION_UP) {
+        this.player.y -= this.player.speed;
+      } else if (TAP_DOWN || MOTION_DOWN) {
         this.player.y += this.player.speed;
+      }
+      // if (this.player.move === DIRECTION.UP) this.player.y -= this.player.speed;
+      // else if (this.player.move === DIRECTION.DOWN)
+      //   this.player.y += this.player.speed;
 
       // On new serve (start of each turn) move the ball to the correct side
       // and randomize the direction to add some challenge.
@@ -443,6 +516,7 @@ var Game = {
   gameStart: function () {
     beep0.play();
     Pong.running = true;
+    MOTION_Z_FROM = MOTION.z;
     window.requestAnimationFrame(Pong.loop);
   },
 
@@ -450,32 +524,36 @@ var Game = {
     document.addEventListener("keydown", function (key) {
       // Handle the 'Press any key to begin' function and start the game.
       if (Pong.running === false) {
-        // beep0.play();
-        // Pong.running = true;
-        // window.requestAnimationFrame(Pong.loop);
         Pong.gameStart();
       }
 
       // Handle up arrow and w key events
-      if (key.keyCode === 38 || key.keyCode === 87)
+      if (key.keyCode === 38 || key.keyCode === 87) {
         Pong.player.move = DIRECTION.UP;
+        TAP_UP = true;
+      } else {
+        TAP_UP = false;
+      }
 
       // Handle down arrow and s key events
-      if (key.keyCode === 40 || key.keyCode === 83)
+      if (key.keyCode === 40 || key.keyCode === 83) {
         Pong.player.move = DIRECTION.DOWN;
+        TAP_DOWN = true;
+      } else {
+        TAP_DOWN = false;
+      }
     });
 
     // Stop the player from moving when there are no keys being pressed.
     document.addEventListener("keyup", function (key) {
       Pong.player.move = DIRECTION.IDLE;
+      TAP_UP = false;
+      TAP_DOWN = false;
     });
 
     // タッチ終了
     document.getElementById("table").addEventListener("touchend", function () {
       if (Pong.running === false) {
-        // beep0.play();
-        // Pong.running = true;
-        // window.requestAnimationFrame(Pong.loop);
         Pong.gameStart();
       }
     });
@@ -483,16 +561,20 @@ var Game = {
     // タッチ開始
     document.getElementById("up").addEventListener("touchstart", function () {
       Pong.player.move = DIRECTION.UP;
+      TAP_UP = true;
     });
     document.getElementById("up").addEventListener("touchend", function () {
       Pong.player.move = DIRECTION.IDLE;
+      TAP_UP = false;
     });
 
     document.getElementById("down").addEventListener("touchstart", function () {
       Pong.player.move = DIRECTION.DOWN;
+      TAP_DOWN = true;
     });
     document.getElementById("down").addEventListener("touchend", function () {
       Pong.player.move = DIRECTION.IDLE;
+      TAP_DOWN = false;
     });
   },
 
