@@ -402,27 +402,26 @@ var Game = {
       Pong.player.move = DIRECTION.IDLE;
     });
 
-    // タッチでゲームスタート
-    this.canvas.addEventListener("touchend", function () {
+    // タッチ終了
+    document.getElementById("table").addEventListener("touchend", function () {
       if (Pong.running === false) {
         Pong.running = true;
         window.requestAnimationFrame(Pong.loop);
       }
     });
 
-    // タッチで上移動
-    document.querySelector("#up").addEventListener("touchstart", function () {
-      Pong.player.move = DIRECTION.UP;
+    // タッチ開始
+    document.getElementById("up").addEventListener("touchstart", function (e) {
+      if (e.touches) Pong.player.move = DIRECTION.UP;
     });
-    document.querySelector("#up").addEventListener("touchend", function () {
+    document.getElementById("up").addEventListener("touchend", function () {
       Pong.player.move = DIRECTION.IDLE;
     });
 
-    // タッチで下移動
-    document.querySelector("#down").addEventListener("touchstart", function () {
-      Pong.player.move = DIRECTION.UP;
+    document.getElementById("down").addEventListener("touchstart", function () {
+      Pong.player.move = DIRECTION.DOWN;
     });
-    document.querySelector("#down").addEventListener("touchend", function () {
+    document.getElementById("down").addEventListener("touchend", function () {
       Pong.player.move = DIRECTION.IDLE;
     });
   },
