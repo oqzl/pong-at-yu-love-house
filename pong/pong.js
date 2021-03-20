@@ -38,8 +38,8 @@ var DIRECTION = {
   RIGHT: 4,
 };
 
-var rounds = [5, 5, 3, 3, 2];
-var colors = ["#1abc9c", "#2ecc71", "#3498db", "#e74c3c", "#9b59b6"];
+var rounds = [5];
+var colors = ["#008000"];
 
 var PADDLE_PARAMS = {
   width: 20,
@@ -297,20 +297,20 @@ var Game = {
     // // Clear the Canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // 背景にテーブル画像を貼る
-    this.context.drawImage(
-      img_table,
-      0,
-      0,
-      this.canvas.clientWidth,
-      this.canvas.clientHeight
-    );
+    // // 背景にテーブル画像を貼る
+    // this.context.drawImage(
+    //   img_table,
+    //   0,
+    //   0,
+    //   this.canvas.clientWidth,
+    //   this.canvas.clientHeight
+    // );
 
-    // // Set the fill style to black
-    // this.context.fillStyle = this.color;
+    // Set the fill style to black
+    this.context.fillStyle = this.color;
 
-    // // Draw the background
-    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // Draw the background
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Set the fill style to white (For the paddles and the ball)
     this.context.fillStyle = "#ffffff";
@@ -340,6 +340,15 @@ var Game = {
         this.ball.height
       );
     }
+
+    // Draw the net (Line in the middle)
+    this.context.beginPath();
+    // this.context.setLineDash([7, 15]);
+    this.context.moveTo(this.canvas.width / 2, this.canvas.height - 140);
+    this.context.lineTo(this.canvas.width / 2, 140);
+    this.context.lineWidth = 10;
+    this.context.strokeStyle = "#ffffff";
+    this.context.stroke();
 
     // Set the default canvas font and align it to the center
     this.context.font = "100px Courier New";
