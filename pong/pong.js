@@ -78,14 +78,14 @@ var Game = {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
 
-    // let ratio = window.devicePixelRatio;
+    let ratio = window.devicePixelRatio;
     // this.canvas.width = 1400;
     // this.canvas.height = 1000;
     // let w = document.querySelector("#wrapper");
     // this.canvas.width = w.offsetWidth / ratio / 2;
     // this.canvas.height = w.offsetHeight / ratio / 2;
-    this.canvas.width = this.canvas.clientWidth;
-    this.canvas.height = this.canvas.clientHeight;
+    this.canvas.width = this.canvas.clientWidth * ratio;
+    this.canvas.height = this.canvas.clientHeight * ratio;
 
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
