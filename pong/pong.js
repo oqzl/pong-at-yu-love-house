@@ -3,6 +3,9 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// countDown or touch
+const CONFIG_START = "countDown"; // "touch";
+
 // スクロール禁止（関係ないかも？）
 window.addEventListener(
   "touchmove",
@@ -102,12 +105,13 @@ var Game = {
     this.timer = 0;
     this.color = TABLE_COLOR;
 
-    // タップしたらスタート版
-    // Pong.menu();
-    // Pong.listen();
-
-    // 3秒カウントダウン版
-    Pong.countDown(3);
+    if (CONFIG_START == "countDown") {
+      // 3秒カウントダウン版
+      Pong.countDown(3);
+    } else {
+      // タップしたらスタート版
+      Pong.menu();
+    }
   },
 
   endGameMenu: function (text) {
@@ -165,6 +169,8 @@ var Game = {
       this.canvas.width / 2,
       this.canvas.height / 2 + 15
     );
+
+    Pong.listen();
   },
 
   // カウントダウンで勝手に始まるバージョン
