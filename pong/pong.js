@@ -26,11 +26,6 @@ const beep2 = new Audio("./mp3/pong.mp3");
 const beep3 = new Audio("./mp3/levelup.mp3");
 const beep4 = new Audio("./mp3/cheers.mp3");
 
-// Image
-const img_racket01 = new Image("./img/racket01.png");
-const img_racket02 = new Image("./img/racket02.png");
-const img_ball = new Image("./img/ball.png");
-
 // Global Variables
 var DIRECTION = {
   IDLE: 0,
@@ -307,9 +302,9 @@ var Game = {
     );
     this.context.fillStyle = "#FF0000";
     this.context.fillRect(
-      this.player.x + 2,
+      this.player.x + 4,
       this.player.y,
-      this.player.width - 2,
+      this.player.width - 4,
       this.player.height
     );
 
@@ -325,7 +320,7 @@ var Game = {
     this.context.fillRect(
       this.paddle.x,
       this.paddle.y,
-      this.paddle.width - 2,
+      this.paddle.width - 4,
       this.paddle.height
     );
 
