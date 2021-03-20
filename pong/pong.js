@@ -401,6 +401,20 @@ var Game = {
     document.addEventListener("keyup", function (key) {
       Pong.player.move = DIRECTION.IDLE;
     });
+
+    document.querySelector("#up").addEventListener("touchstart", function () {
+      Pong.player.move = DIRECTION.UP;
+    });
+    document.querySelector("#up").addEventListener("touchend", function () {
+      Pong.player.move = DIRECTION.IDLE;
+    });
+
+    document.querySelector("#down").addEventListener("touchstart", function () {
+      Pong.player.move = DIRECTION.UP;
+    });
+    document.querySelector("#down").addEventListener("touchend", function () {
+      Pong.player.move = DIRECTION.IDLE;
+    });
   },
 
   // Reset the ball location, the player turns and set a delay before the next round begins.
