@@ -84,8 +84,8 @@ var Game = {
     // let w = document.querySelector("#wrapper");
     // this.canvas.width = w.offsetWidth / ratio / 2;
     // this.canvas.height = w.offsetHeight / ratio / 2;
-    // this.canvas.width = this.canvas.clientWidth;
-    // this.canvas.height = this.canvas.clientHeight;
+    this.canvas.width = this.canvas.clientWidth;
+    this.canvas.height = this.canvas.clientHeight;
 
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
