@@ -80,11 +80,11 @@ var Game = {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
 
-    // let ratio = window.devicePixelRatio;
+    let ratio = window.devicePixelRatio;
     // this.canvas.width = 1400;
     // this.canvas.height = 1000;
-    this.canvas.width = w.offsetWidth;
-    this.canvas.height = w.offsetHeight;
+    this.canvas.width = w.offsetWidth / ratio;
+    this.canvas.height = w.offsetHeight / ratio;
 
     // this.canvas.style.width = this.canvas.width / 2 + "px";
     // this.canvas.style.height = this.canvas.height / 2 + "px";
