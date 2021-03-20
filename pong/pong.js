@@ -19,12 +19,15 @@ window.removeEventListener(
   { passive: false }
 );
 
-// Audio (Game sounds) in base64 format.
-var beep0 = new Audio("./ping.mp3");
-var beep1 = new Audio("./hit.mp3");
-var beep2 = new Audio("./pong.mp3");
-var beep3 = new Audio("./levelup.mp3");
-var beep4 = new Audio("./cheers.mp3");
+// Audio (Game sounds)
+const beep0 = new Audio("./mp3/ping.mp3");
+const beep1 = new Audio("./mp3/hit.mp3");
+const beep2 = new Audio("./mp3/pong.mp3");
+const beep3 = new Audio("./mp3/levelup.mp3");
+const beep4 = new Audio("./mp3/cheers.mp3");
+
+// Image
+const img_table = new Image("./img/table.png");
 
 // Global Variables
 var DIRECTION = {
@@ -87,6 +90,7 @@ var Game = {
 
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
+    this.context.globalAlpha = 0.5;
 
     let ratio = window.devicePixelRatio;
     this.canvas.width = this.canvas.clientWidth * ratio;
@@ -290,14 +294,23 @@ var Game = {
 
   // Draw the objects to the canvas element
   draw: function () {
-    // Clear the Canvas
+    // // Clear the Canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Set the fill style to black
-    this.context.fillStyle = this.color;
+    // 背景にテーブル画像を貼る
+    this.context.drawImage(
+      img_table,
+      0,
+      0,
+      this.canvas.clientWidth,
+      this.canvas.clientHeight
+    );
 
-    // Draw the background
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // // Set the fill style to black
+    // this.context.fillStyle = this.color;
+
+    // // Draw the background
+    // this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Set the fill style to white (For the paddles and the ball)
     this.context.fillStyle = "#ffffff";
@@ -327,15 +340,6 @@ var Game = {
         this.ball.height
       );
     }
-
-    // Draw the net (Line in the middle)
-    this.context.beginPath();
-    this.context.setLineDash([7, 15]);
-    this.context.moveTo(this.canvas.width / 2, this.canvas.height - 140);
-    this.context.lineTo(this.canvas.width / 2, 140);
-    this.context.lineWidth = 10;
-    this.context.strokeStyle = "#ffffff";
-    this.context.stroke();
 
     // Set the default canvas font and align it to the center
     this.context.font = "100px Courier New";
