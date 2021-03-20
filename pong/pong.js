@@ -67,20 +67,19 @@ var Paddle = {
 
 var Game = {
   initialize: function () {
-    let c = document.querySelector("canvas");
-    console.log(c);
+    let w = document.querySelector("#wrapper");
 
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
 
-    let retio = window.devicePixelRatio;
+    let ratio = window.devicePixelRatio;
     // this.canvas.width = 1400;
     // this.canvas.height = 1000;
-    this.canvas.width = this.canvas.clientWidth * retio;
-    this.canvas.height = this.canvas.clientHeight * retio;
+    this.canvas.width = w.offsetWidth;
+    this.canvas.height = w.offsetHeight;
 
-    this.canvas.style.width = this.canvas.width / 2 + "px";
-    this.canvas.style.height = this.canvas.height / 2 + "px";
+    // this.canvas.style.width = this.canvas.width / 2 + "px";
+    // this.canvas.style.height = this.canvas.height / 2 + "px";
 
     this.player = Paddle.new.call(this, "left");
     this.paddle = Paddle.new.call(this, "right");
