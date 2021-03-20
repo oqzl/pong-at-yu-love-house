@@ -6,7 +6,7 @@
 // const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 
 // 開始時に自動でカウントダウンするか
-const CONFIG_START_COUNTDOWN = true;
+const CONFIG_START_COUNTDOWN = false;
 
 // ジャイロ操作するか
 const CONFIG_USE_MOTION = true;
@@ -33,6 +33,7 @@ const beep1 = new Audio("./mp3/hit.mp3");
 const beep2 = new Audio("./mp3/pong.mp3");
 const beep3 = new Audio("./mp3/levelup.mp3");
 const beep4 = new Audio("./mp3/cheers.mp3");
+const beep5 = new Audio("./mp3/swing.mp3");
 
 // Global Variables
 const DIRECTION = {
