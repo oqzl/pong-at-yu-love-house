@@ -456,3 +456,6 @@ Pong.initialize();
 window.addEventListener("resize", function () {
   location.reload();
 });
+window.addEventListener("orientationchange", function () {
+  location.reload();
+});
