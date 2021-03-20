@@ -14,13 +14,13 @@ window.addEventListener(
   },
   { passive: false }
 );
-// window.removeEventListener(
-//   "touchmove",
-//   function (e) {
-//     e.preventDefault();
-//   },
-//   { passive: false }
-// );
+window.removeEventListener(
+  "touchmove",
+  function (e) {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 
 // Audio (Game sounds) in base64 format.
 var beep1 = new Audio(
