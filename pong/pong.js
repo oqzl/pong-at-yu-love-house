@@ -102,6 +102,7 @@ var Ball = {
       moveX: DIRECTION.IDLE,
       moveY: DIRECTION.IDLE,
       speed: incrementedSpeed || BALL_PARAMS.speed,
+      random: { dx: 1, dy: 1 },
     };
   },
 };
@@ -307,20 +308,38 @@ var Game = {
     }, 1000);
   },
 
+  // ランダムな速度変化
+  randomSpeed: function () {
+    var ddx1 = Math.random() * 6;
+    var ddx2 = Math.random() * 6;
+    var ddy1 = Math.random() * 6;
+    var ddy2 = Math.random() * 6;
+    var dx = 0.4 + (ddx1 + ddx2) * 0.1;
+    var dy = 0.4 + (ddy1 + ddy2) * 0.1;
+    return {
+      dx: dx,
+      dy: dy,
+    };
+  },
+
   // Update all objects (move the player, paddle, ball, increment the score, etc.)
   update: function () {
     if (!this.over) {
       // If the ball collides with the bound limits - correct the x and y coords.
-      if (this.ball.x <= 0)
+      if (this.ball.x <= 0) {
         Pong._resetTurn.call(this, this.paddle, this.player);
-      if (this.ball.x >= this.canvas.width - this.ball.width)
+      }
+      if (this.ball.x >= this.canvas.width - this.ball.width) {
         Pong._resetTurn.call(this, this.player, this.paddle);
+      }
       if (this.ball.y <= 0) {
         this.ball.moveY = DIRECTION.DOWN;
+        this.ball.random = Pong.randomSpeed();
         beep0.play();
       }
       if (this.ball.y >= this.canvas.height - this.ball.height) {
         this.ball.moveY = DIRECTION.UP;
+        this.ball.random = Pong.randomSpeed();
         beep0.play();
       }
 
@@ -348,35 +367,47 @@ var Game = {
       }
 
       // If the player collides with the bound limits, update the x and y coords.
-      if (this.player.y <= 0) this.player.y = 0;
-      else if (this.player.y >= this.canvas.height - this.player.height)
+      if (this.player.y <= 0) {
+        this.player.y = 0;
+      } else if (this.player.y >= this.canvas.height - this.player.height) {
         this.player.y = this.canvas.height - this.player.height;
+      }
 
       // Move ball in intended direction based on moveY and moveX values
-      if (this.ball.moveY === DIRECTION.UP)
-        this.ball.y -= this.ball.speed / 1.5;
-      else if (this.ball.moveY === DIRECTION.DOWN)
-        this.ball.y += this.ball.speed / 1.5;
-      if (this.ball.moveX === DIRECTION.LEFT) this.ball.x -= this.ball.speed;
-      else if (this.ball.moveX === DIRECTION.RIGHT)
-        this.ball.x += this.ball.speed;
+      // var random = Pong.randomSpeed();
+      if (this.ball.moveY === DIRECTION.UP) {
+        this.ball.y -= (this.ball.speed / 1.5) * this.ball.random.dy;
+      } else if (this.ball.moveY === DIRECTION.DOWN) {
+        this.ball.y += (this.ball.speed / 1.5) * this.ball.random.dy;
+      }
+      if (this.ball.moveX === DIRECTION.LEFT) {
+        this.ball.x -= this.ball.speed * this.ball.random.dx;
+      } else if (this.ball.moveX === DIRECTION.RIGHT) {
+        this.ball.x += this.ball.speed * this.ball.random.dx;
+      }
 
       // Handle paddle (AI) UP and DOWN movement
       if (this.paddle.y > this.ball.y - this.paddle.height / 2) {
-        if (this.ball.moveX === DIRECTION.RIGHT)
-          this.paddle.y -= this.paddle.speed / 1.5;
-        else this.paddle.y -= this.paddle.speed / 4;
+        if (this.ball.moveX === DIRECTION.RIGHT) {
+          this.paddle.y -= this.paddle.speed / 1.6;
+        } else {
+          this.paddle.y -= this.paddle.speed / 4;
+        }
       }
       if (this.paddle.y < this.ball.y - this.paddle.height / 2) {
-        if (this.ball.moveX === DIRECTION.RIGHT)
-          this.paddle.y += this.paddle.speed / 1.5;
-        else this.paddle.y += this.paddle.speed / 4;
+        if (this.ball.moveX === DIRECTION.RIGHT) {
+          this.paddle.y += this.paddle.speed / 1.6;
+        } else {
+          this.paddle.y += this.paddle.speed / 4;
+        }
       }
 
       // Handle paddle (AI) wall collision
-      if (this.paddle.y >= this.canvas.height - this.paddle.height)
+      if (this.paddle.y >= this.canvas.height - this.paddle.height) {
         this.paddle.y = this.canvas.height - this.paddle.height;
-      else if (this.paddle.y <= 0) this.paddle.y = 0;
+      } else if (this.paddle.y <= 0) {
+        this.paddle.y = 0;
+      }
 
       // Handle Player-Ball collisions
       if (
@@ -389,7 +420,7 @@ var Game = {
         ) {
           this.ball.x = this.player.x + this.ball.width;
           this.ball.moveX = DIRECTION.RIGHT;
-
+          this.ball.random = Pong.randomSpeed();
           beep1.play();
         }
       }
@@ -405,7 +436,7 @@ var Game = {
         ) {
           this.ball.x = this.paddle.x - this.ball.width;
           this.ball.moveX = DIRECTION.LEFT;
-
+          this.ball.random = Pong.randomSpeed();
           beep1.play();
         }
       }
