@@ -19,11 +19,15 @@ debug.innerHTML = "HOGE";
 const deviceMotionEventHandler = (e) => {
 	// devicemotionのイベント処理
 	var log = "";
-	const a = e.accelerationIncludingGravity;
-	for (x in a) {
+	// const a = e.accelerationIncludingGravity;
+	// for (x in a) {
+	// 	log += x + " = " + a[x] + "<br />";
+	// }
+  const r = e.rotationRate;
+	for (x in r) {
 		log += x + " = " + a[x] + "<br />";
 	}
-	debug.innerHTML = log;
+  debug.innerHTML = log;
 }
 
 const requestDeviceMotionPermission = () => {
