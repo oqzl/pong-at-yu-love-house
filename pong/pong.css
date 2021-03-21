@@ -28,7 +28,8 @@ canvas#table {
 
 #up,
 #down,
-#debug {
+#debug,
+#gyro {
   position: absolute;
   display: block;
   z-index: 1;
@@ -46,4 +47,10 @@ canvas#table {
 #debug {
   right: 0px;
   top: 0px;
+}
+#gyro {
+  width: 200px;
+  height: 40px;
+  right: 10px;
+  bottom: 10px;
 }

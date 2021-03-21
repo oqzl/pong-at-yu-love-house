@@ -144,11 +144,10 @@ var Game = {
     this.timer = 0;
     this.color = TABLE_COLOR;
 
-    // if (CONFIG_USE_MOTION) {
-    //   // ジャイロのパーミッション
-    //   Pong.requestDeviceMotionPermission();
-    // }
-    Pong.requestDeviceMotionPermission();
+    if (CONFIG_USE_MOTION) {
+      // ジャイロのパーミッション
+      Pong.requestDeviceMotionPermission();
+    }
 
     if (CONFIG_START_COUNTDOWN) {
       // 3秒カウントダウン版
@@ -700,6 +699,11 @@ var queryParams = [...new URLSearchParams(queryString).entries()].reduce(
   {}
 );
 console.log(queryParams);
+
+document.getElementById("gyro").addEventListener("click", function () {
+  document.getElementById("gyro").style.display = "none";
+  Pong.requestDeviceMotionPermission();
+});
 
 var Pong = Object.assign({}, Game);
 Pong.initialize(queryParams.player, queryParams.opponent);
