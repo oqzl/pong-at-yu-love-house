@@ -132,10 +132,11 @@ var Game = {
     this.timer = 0;
     this.color = TABLE_COLOR;
 
-    if (CONFIG_USE_MOTION) {
-      // ジャイロのパーミッション
-      Pong.requestDeviceMotionPermission();
-    }
+    // if (CONFIG_USE_MOTION) {
+    //   // ジャイロのパーミッション
+    //   Pong.requestDeviceMotionPermission();
+    // }
+    Pong.requestDeviceMotionPermission();
 
     if (CONFIG_START_COUNTDOWN) {
       // 3秒カウントダウン版
