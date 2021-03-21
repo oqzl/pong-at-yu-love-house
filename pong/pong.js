@@ -68,8 +68,8 @@ var BALL_PARAMS = {
 // ジャイロセンサーから取得した重力加速度の値
 var MOTION = {
   x: 0,
-  y: 0,
   z: 0,
+  deg: 0,
 };
 // ゲーム開始直前の傾き（基準値）
 var MOTION_Z_FROM = 0;
@@ -150,13 +150,13 @@ var Game = {
     // devicemotionのイベント処理
     var log = "";
     const a = e.accelerationIncludingGravity;
-    // MOTION.x = a.x;
-    // MOTION.y = a.y;
+    MOTION.x = a.x;
     MOTION.z = a.z;
-    if (MOTION.z > MOTION_Z_FROM + 1) {
+    MOTION.deg = (Math.atan(a.z / a.x) / Math.PI) * 180;
+    if (MOTION.deg > MOTION_Z_FROM + 10) {
       MOTION_UP = false;
       MOTION_DOWN = true;
-    } else if (MOTION.z < MOTION_Z_FROM - 1) {
+    } else if (MOTION.deg < MOTION_Z_FROM - 10) {
       MOTION_UP = true;
       MOTION_DOWN = false;
     } else {
@@ -531,7 +531,7 @@ var Game = {
   gameStart: function () {
     beep0.play();
     Pong.running = true;
-    MOTION_Z_FROM = MOTION.z;
+    MOTION_Z_FROM = MOTION.deg;
     window.requestAnimationFrame(Pong.loop);
   },
 
