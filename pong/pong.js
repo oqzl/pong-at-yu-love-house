@@ -209,8 +209,9 @@ var Game = {
     );
 
     setTimeout(function () {
-      Pong = Object.assign({}, Game);
-      Pong.initialize(); // !!! ここでロビーに戻す !!!
+      // Pong = Object.assign({}, Game);
+      // Pong.initialize(); // !!! ここでロビーに戻す !!!
+      window.history.back();
     }, 3000);
   },
 
