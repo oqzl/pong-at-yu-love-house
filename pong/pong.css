@@ -47,6 +47,7 @@ canvas#table {
 #debug {
   right: 0px;
   top: 0px;
+  display: none;
 }
 #gyro {
   width: 200px;
