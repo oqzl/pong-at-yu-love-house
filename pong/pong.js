@@ -436,6 +436,33 @@ var Game = {
     this.context.strokeStyle = "#ffffff";
     this.context.stroke();
 
+    // 影
+    this.context.fillStyle = "#00000044";
+    this.context.fillRect(
+      this.player.x + this.canvas.width / 15,
+      this.player.y + 20,
+      this.player.width,
+      this.player.height * 1.4
+    );
+    this.context.fillRect(
+      this.paddle.x + this.canvas.width / 15,
+      this.paddle.y + 20,
+      this.paddle.width,
+      this.paddle.height * 1.4
+    );
+    this.context.fillRect(
+      this.ball.x - 2 + this.canvas.width / 15,
+      this.ball.y + 2 + 20,
+      this.ball.width + 4,
+      this.ball.height - 4
+    );
+    this.context.fillRect(
+      this.ball.x + 2 + this.canvas.width / 15,
+      this.ball.y - 2 + 20,
+      this.ball.width - 4,
+      this.ball.height + 4
+    );
+
     // Draw the Player
     this.context.fillStyle = "#FFD187";
     this.context.fillRect(
@@ -476,7 +503,6 @@ var Game = {
       this.canvas.width / 15,
       this.canvas.height
     );
-    this.context.fillStyle = "#ffffff";
     // ネット
     this.context.beginPath();
     this.context.moveTo(this.canvas.width / 2, this.canvas.height);
@@ -486,6 +512,7 @@ var Game = {
     this.context.stroke();
 
     // Draw the Ball
+    this.context.fillStyle = "#ffffff";
     if (Pong._turnDelayIsOver.call(this)) {
       this.context.fillRect(
         this.ball.x - 2,
