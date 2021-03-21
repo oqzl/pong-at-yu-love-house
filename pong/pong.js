@@ -9,7 +9,7 @@
 const CONFIG_START_COUNTDOWN = false;
 
 // ジャイロ操作するか
-const CONFIG_USE_MOTION = true;
+const CONFIG_USE_MOTION = false;
 
 // 終了後ロビーに戻す
 const CONFIG_RETURN_ROBBY = true;
@@ -700,10 +700,14 @@ var queryParams = [...new URLSearchParams(queryString).entries()].reduce(
 );
 console.log(queryParams);
 
-document.getElementById("gyro").addEventListener("click", function () {
+if (CONFIG_USE_MOTION) {
+  document.getElementById("gyro").addEventListener("click", function () {
+    document.getElementById("gyro").style.display = "none";
+    Pong.requestDeviceMotionPermission();
+  });
+} else {
   document.getElementById("gyro").style.display = "none";
-  Pong.requestDeviceMotionPermission();
-});
+}
 
 var Pong = Object.assign({}, Game);
 Pong.initialize(queryParams.player, queryParams.opponent);
