@@ -20,7 +20,7 @@ const deviceMotionEventHandler = (e) => {
 	// devicemotionのイベント処理
 	var log = "";
 	for (x in e) {
-		log += x + " = " + a[x] + "<br />";
+		log += x + " = " + e[x] + "<br />";
 	}
 	// const a = e.accelerationIncludingGravity;
 	// for (x in a) {
@@ -28,7 +28,7 @@ const deviceMotionEventHandler = (e) => {
 	// }
   // const r = e.rotationRate;
 	// for (x in r) {
-	// 	log += x + " = " + a[x] + "<br />";
+	// 	log += x + " = " + r[x] + "<br />";
 	// }
   debug.innerHTML = log;
 }
