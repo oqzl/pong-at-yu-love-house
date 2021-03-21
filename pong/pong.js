@@ -30,15 +30,26 @@ window.removeEventListener(
   { passive: false }
 );
 
-var AudioX = {};
+var AudioX = {
+  new: function (src) {
+    return {
+      src: src,
+      audio: new Audio(src),
+      play: function () {
+        this.audio.play();
+        this.audio = new Audio(this.src);
+      },
+    };
+  },
+};
 
 // Audio (Game sounds)
-const beep0 = new Audio("./mp3/ping.mp3");
-const beep1 = new Audio("./mp3/hit.mp3");
-const beep2 = new Audio("./mp3/pong.mp3");
-const beep3 = new Audio("./mp3/levelup.mp3");
-const beep4 = new Audio("./mp3/cheers.mp3");
-const beep5 = new Audio("./mp3/swing.mp3");
+const beep0 = AudioX.new.call(this, "./mp3/ping.mp3");
+const beep1 = AudioX.new.call(this, "./mp3/hit.mp3");
+const beep2 = AudioX.new.call(this, "./mp3/pong.mp3");
+const beep3 = AudioX.new.call(this, "./mp3/levelup.mp3");
+const beep4 = AudioX.new.call(this, "./mp3/cheers.mp3");
+const beep5 = AudioX.new.call(this, "./mp3/swing.mp3");
 
 // Global Variables
 const DIRECTION = {
@@ -632,10 +643,10 @@ var Game = {
 
     victor.score++;
 
-    if (!beep2.paused) {
-      beep2.pause();
-      beep2.currentTime = 0;
-    }
+    // if (!beep2.paused) {
+    //   beep2.pause();
+    //   beep2.currentTime = 0;
+    // }
     beep2.play();
   },
 
