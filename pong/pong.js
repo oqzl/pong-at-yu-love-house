@@ -213,7 +213,7 @@ var Game = {
 
     setTimeout(function () {
       if (CONFIG_RETURN_ROBBY) {
-        window.history.push("https://yu-love-house.web.app/");
+        window.location = "https://yu-love-house.web.app/";
       } else {
         Pong = Object.assign({}, Game);
         Pong.initialize();
