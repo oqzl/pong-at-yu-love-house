@@ -33,16 +33,21 @@ canvas#table {
   position: absolute;
   display: block;
   z-index: 1;
-  width: 30%;
-  height: 30%;
+  width: 20%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #up {
   left: 0px;
   top: 0px;
+  background-color: #fff6;
 }
 #down {
   left: 0px;
   bottom: 0px;
+  background-color: #fff6;
 }
 #debug {
   right: 0px;
