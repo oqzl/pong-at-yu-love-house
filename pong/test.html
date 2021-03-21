@@ -28,7 +28,7 @@ const deviceMotionEventHandler = (e) => {
 	// }
   var _x = a.x;
   var _z = a.z;
-  var deg = Math.tan(_x / _z);
+  var deg = Math.tan(_z / _x);
   log = deg;
   debug.innerHTML = log;
 }
