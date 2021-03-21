@@ -154,6 +154,7 @@ var Game = {
     MOTION.x = a.x;
     MOTION.z = a.z;
     MOTION.deg = (Math.atan(a.z / a.x) / Math.PI) * 180;
+    document.getElementById("debug").innerHTML = MOTION.deg;
     if (MOTION.deg > MOTION_Z_FROM + 10) {
       MOTION_UP = false;
       MOTION_DOWN = true;
