@@ -30,7 +30,9 @@ const deviceMotionEventHandler = (e) => {
   var _z = a.z;
   var deg1 = Math.tan(_x / _z) / Math.PI * 180;
   var deg2 = Math.tan(_z / _x) / Math.PI * 180;
-  log = _x + "<br>" + _z + "<br>" + deg1 + "<br>" + deg2;
+  var deg3 = Math.atan(_x / _z) / Math.PI * 180;
+  var deg4 = Math.atan(_z / _x) / Math.PI * 180;
+  log = _x + "<br>" + _z + "<br>" + deg1 + "<br>" + deg2 + "<br>" + deg3 + "<br>" + deg4;
   debug.innerHTML = log;
 }
 
