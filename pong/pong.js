@@ -450,18 +450,20 @@ var Game = {
       this.paddle.width,
       this.paddle.height * 1.4
     );
-    this.context.fillRect(
-      this.ball.x - 2 + this.canvas.width / 15,
-      this.ball.y + 2 + 20,
-      this.ball.width + 4,
-      this.ball.height - 4
-    );
-    this.context.fillRect(
-      this.ball.x + 2 + this.canvas.width / 15,
-      this.ball.y - 2 + 20,
-      this.ball.width - 4,
-      this.ball.height + 4
-    );
+    if (Pong._turnDelayIsOver.call(this)) {
+      this.context.fillRect(
+        this.ball.x - 2 + this.canvas.width / 15,
+        this.ball.y + 2 + 20,
+        this.ball.width + 4,
+        this.ball.height - 4
+      );
+      this.context.fillRect(
+        this.ball.x + 2 + this.canvas.width / 15,
+        this.ball.y - 2 + 20,
+        this.ball.width - 4,
+        this.ball.height + 4
+      );
+    }
 
     // Draw the Player
     this.context.fillStyle = "#FFD187";
