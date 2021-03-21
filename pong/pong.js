@@ -11,6 +11,9 @@ const CONFIG_START_COUNTDOWN = false;
 // ジャイロ操作するか
 const CONFIG_USE_MOTION = true;
 
+// 終了後ロビーに戻す
+const CONFIG_RETURN_ROBBY = true;
+
 // スクロール禁止（関係ないかも？）
 window.addEventListener(
   "touchmove",
@@ -209,9 +212,12 @@ var Game = {
     );
 
     setTimeout(function () {
-      // Pong = Object.assign({}, Game);
-      // Pong.initialize(); // !!! ここでロビーに戻す !!!
-      window.history.back();
+      if (CONFIG_RETURN_ROBBY) {
+        window.history.push("https://yu-love-house.web.app/");
+      } else {
+        Pong = Object.assign({}, Game);
+        Pong.initialize();
+      }
     }, 3000);
   },
 
